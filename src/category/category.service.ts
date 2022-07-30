@@ -11,7 +11,15 @@ export class CategoryService {
     private readonly categoryRepository: Repository<CategoryEntity>,
   ) {}
 
-  async getCategories() {
-    return [];
+  getCategories(): Promise<CategoryEntity[]> {
+    return this.categoryRepository.find();
+  }
+
+  getCategory(title: string): Promise<CategoryEntity> {
+    return this.categoryRepository.findOneBy({ title });
+  }
+
+  createCategory(title: string): Promise<CategoryEntity> {
+    return this.categoryRepository.save({ title });
   }
 }

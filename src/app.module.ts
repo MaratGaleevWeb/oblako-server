@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
+import { TodoModule } from './todo/todo.module';
+
 import { AppController } from './app.controller';
 
 import { AppService } from './app.service';
@@ -11,7 +13,6 @@ import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
-    CategoryModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -19,9 +20,8 @@ import { CategoryModule } from './category/category.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       port: +process.env.DB_PORT,
-      entities: [__dirname + 'dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
       autoLoadEntities: true,
+      synchronize: true,
       extra: {
         ssl: {
           rejectUnauthorized: false,
@@ -34,6 +34,8 @@ import { CategoryModule } from './category/category.module';
       introspection: true,
       playground: true,
     }),
+    CategoryModule,
+    TodoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

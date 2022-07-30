@@ -2,11 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type TodoEntity {
+  id: ID!
+  text: String!
+  isCompleted: Boolean!
+  category: CategoryEntity!
+}
+
 type CategoryEntity {
   id: ID!
   title: String!
+  todos: [TodoEntity!]
 }
 
 type Query {
   categories: [CategoryEntity!]!
+}
+
+type Mutation {
+  createTodo(CreateTodoInput: CreateTodoInput!): TodoEntity!
+  updateTodo(UpdateTodoInput: UpdateTodoInput!): TodoEntity!
+}
+
+input CreateTodoInput {
+  text: String!
+  category: String!
+}
+
+input UpdateTodoInput {
+  id: ID!
+  isCompleted: Boolean!
 }
